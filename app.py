@@ -34,6 +34,11 @@ st.markdown("""
         border-right: 1px solid #e2e8f0;
     }
     
+    /* Remove sidebar top padding gap */
+    [data-testid="stSidebarUserContent"] {
+        padding-top: 1.5rem !important;
+    }
+    
     /* Custom tab container styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 6px;
@@ -122,7 +127,7 @@ st.markdown("""
     /* Minimalist Header with a Soft Top Accent Line */
     .app-header {
         background: #ffffff;
-        padding: 24px 30px;
+        padding: 26px 30px;
         border-radius: 14px;
         margin-bottom: 24px;
         border: 1px solid #e2e8f0;
@@ -227,10 +232,8 @@ with st.spinner("Initializing performance data..."):
 # ----------------------------------------------------
 # SIDEBAR CONTROLS
 # ----------------------------------------------------
-st.sidebar.markdown("<div style='text-align: center; padding: 15px 0;'><h3 style='color:#4f46e5; font-weight:800; margin:0; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3><p style='color:#64748b; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;'>Hierarchical Engine</p></div>", unsafe_allow_html=True)
-st.sidebar.markdown("---")
 
-# Navigation Workspace
+# Navigation Workspace (starts right at the top due to custom padding CSS)
 app_mode = st.sidebar.radio(
     "Navigation Workspace",
     ["Overview Dashboard", "Interactive Drilldown & EDA", "Forecast Simulation", "Pipeline & Code Architecture"]
@@ -302,9 +305,13 @@ st.sidebar.markdown("""
 # ----------------------------------------------------
 # MAIN HEADER
 # ----------------------------------------------------
+# Placed the "🚗 AUTOFCAST" engine logo badge inside the main header card
 st.markdown("""
 <div class="app-header">
-    <div class="app-title">🚗 Car Sales Hierarchical Forecasting</div>
+    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <span style="background: rgba(99, 102, 241, 0.08); color: #4f46e5; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em;">🚗 AUTOFCAST ENGINE</span>
+    </div>
+    <div class="app-title">Car Sales Hierarchical Forecasting</div>
     <div class="app-subtitle">An interactive visual explorer for time series hierarchical forecasting pipeline</div>
 </div>
 """, unsafe_allow_html=True)
@@ -322,8 +329,6 @@ if app_mode == "Overview Dashboard":
     avg_price = df_raw['price_'].mean()
     top_region = df_raw['dealer_region'].value_counts().index[0]
     
-    # If a scenario preset is selected, calculate simulated 2027 metrics
-    # We sum all region level forecasts to get the total market forecast
     regions_list = df_raw['dealer_region'].unique().tolist()
     total_reconciled_fcst_sum = 0
     total_simulated_fcst_sum = 0
@@ -333,7 +338,6 @@ if app_mode == "Overview Dashboard":
         total_reconciled_fcst_sum = df_reg_fcst['AutoARIMA/BottomUp'].sum()
         
         sim_multiplier = 1 + (active_growth / 100.0)
-        # Apply deterministic noise for matching stats
         np.random.seed(42)
         noise_factors = 1.0 + (np.random.normal(0, active_noise / 100.0, len(df_reg_fcst)))
         total_simulated_fcst_sum = (df_reg_fcst['AutoARIMA/BottomUp'] * sim_multiplier * noise_factors).sum()
@@ -370,7 +374,6 @@ if app_mode == "Overview Dashboard":
         """, unsafe_allow_html=True)
         
     with m3:
-        # Dynamic Next-Year Forecast Metric
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-icon-box" style="background: rgba(245, 158, 11, 0.08);">
@@ -405,13 +408,11 @@ if app_mode == "Overview Dashboard":
         st.markdown("##### Historical Sales and Future Scenario Projections")
         monthly_sales = df_raw.groupby('month_start').size().reset_index(name='sales')
         
-        # Aggregate forecast globally for plotting
         if df_forecast is not None:
             df_reg_fcst = df_forecast[df_forecast['unique_id'].isin(regions_list)]
             monthly_fcst = df_reg_fcst.groupby('ds')[['AutoARIMA/BottomUp']].sum().reset_index()
             monthly_fcst = monthly_fcst.sort_values('ds')
             
-            # Apply growth and noise simulated projections
             sim_ratio = 1 + (active_growth / 100.0)
             np.random.seed(42)
             noise_factors = 1.0 + (np.random.normal(0, active_noise / 100.0, len(monthly_fcst)))
@@ -430,7 +431,7 @@ if app_mode == "Overview Dashboard":
             name="Historical Sales"
         ))
         
-        # Reconciled Forecast Path (2027)
+        # Reconciled Forecast Path
         fig_trend.add_trace(go.Scatter(
             x=monthly_fcst['ds'],
             y=monthly_fcst['AutoARIMA/BottomUp'],
@@ -439,7 +440,7 @@ if app_mode == "Overview Dashboard":
             name="Base Reconciled Forecast"
         ))
         
-        # Scenario Simulated Path (2027)
+        # Scenario Simulated Path
         if active_growth != 0 or active_noise != 0:
             fig_trend.add_trace(go.Scatter(
                 x=monthly_fcst['ds'],
@@ -685,17 +686,17 @@ elif app_mode == "Forecast Simulation":
             
             sim_col_1, sim_col_2 = st.columns(2)
             with sim_col_1:
-                # Using key='growth_slider' synced with sidebar presets!
+                # Key synced with st.session_state
                 growth_slider = st.slider(
                     "Simulated Growth Shift (%)",
                     min_value=-50,
                     max_value=50,
-                    key="growth_slider", 
+                    key="growth_slider",
                     step=5,
                     help="Shift the reconciled forecast path."
                 )
             with sim_col_2:
-                # Using key='noise_slider' synced with sidebar presets!
+                # Key synced with st.session_state
                 noise_slider = st.slider(
                     "Add Volatility (%)",
                     min_value=0,
