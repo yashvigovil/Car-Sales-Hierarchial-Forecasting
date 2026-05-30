@@ -1,0 +1,19 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local development logs and tool state
+*.log
+notebooks_code.txt
+
+# Scratch scripts
+inspect_csv.py
+inspect_notebook_outputs.py
+parse_notebooks.py
+test_forecast_speed.py
