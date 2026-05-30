@@ -836,9 +836,9 @@ elif app_mode == "Pipeline & Code Architecture":
     """)
     
     tab_ingest, tab_prep, tab_baseline, tab_reconcile = st.tabs([
-        "📥 1. Ingestion.ipynb",
-        "⚙️ 2. Preprocessing.ipynb",
-        "🤖 3. Baseline.ipynb (Base Models)",
+        "📥 1_Ingestion.ipynb",
+        "⚙️ 2_Preprocessing.ipynb",
+        "🤖 3_Baseline.ipynb (Base Models)",
         "⚖️ 4. Reconciliation Process"
     ])
     
@@ -853,7 +853,7 @@ elif app_mode == "Pipeline & Code Architecture":
         - Write validation tables in Delta format.
         """)
         st.code("""
-# Column normalization snippet from Ingestion.ipynb
+# Column normalization snippet from 1_Ingestion.ipynb
 clean_columns = [
     col_name.strip()
     .replace(" ", "_")
@@ -877,7 +877,7 @@ df = df.toDF(*clean_columns)
         - Overwrite gold validation tables.
         """)
         st.code("""
-# Filtering out sparse time series in Preprocessing.ipynb
+# Filtering out sparse time series in 2_Preprocessing.ipynb
 series_length = hier_df.groupBy("unique_id").count()
 valid_series = series_length.filter(col("count") >= 12).select("unique_id")
 hier_df = hier_df.join(valid_series, on="unique_id", how="inner")
@@ -895,7 +895,7 @@ hier_df = hier_df.join(valid_series, on="unique_id", how="inner")
         - Save model outputs to MLflow model registry as PKL files.
         """)
         st.code("""
-# StatsForecast AutoARIMA fitment in Baseline.ipynb
+# StatsForecast AutoARIMA fitment in 3_Baseline.ipynb
 sf = StatsForecast(
     models=[AutoARIMA(season_length=12)],
     freq="MS",
@@ -915,7 +915,7 @@ validation_forecast = sf.forecast(df=train_df, h=12)
         - Bottom-Up sum ensures that child predictions sum up exactly to parent level forecasts, maintaining mathematical consistency.
         """)
         st.code("""
-# Reconcile forecasts using hierarchicalforecast in Baseline.ipynb
+# Reconcile forecasts using hierarchicalforecast in 3_Baseline.ipynb
 reconciler = HierarchicalReconciliation(
     reconcilers=[BottomUp()]
 )
