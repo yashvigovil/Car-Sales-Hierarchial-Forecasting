@@ -13,34 +13,34 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for subtle, minimalist & high-end UI
+# Custom CSS for light-mode glassmorphism & premium UI with pastel accents
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
     
     html, body, [class*="css"] {
         font-family: 'Outfit', sans-serif;
     }
     
-    /* Main Layout Background */
+    /* Main Layout Background - Clean Light Off-White */
     .stApp {
-        background-color: #090d16 !important;
-        color: #cbd5e1;
+        background-color: #f8fafc !important;
+        color: #334155;
     }
     
-    /* Sidebar styling */
+    /* Sidebar styling - Clean Slate White */
     section[data-testid="stSidebar"] {
-        background-color: #05070b !important;
-        border-right: 1px solid #1e293b;
+        background-color: #ffffff !important;
+        border-right: 1px solid #e2e8f0;
     }
     
     /* Custom tab container styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 6px;
-        background-color: #131924;
+        background-color: #f1f5f9;
         padding: 5px;
-        border-radius: 8px;
-        border: 1px solid #1e293b;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
     }
     .stTabs [data-baseweb="tab"] {
         height: 38px;
@@ -48,85 +48,91 @@ st.markdown("""
         background-color: transparent;
         border-radius: 6px;
         color: #64748b;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 14px;
         border: none;
-        padding: 0 14px;
+        padding: 0 16px;
         transition: all 0.2s ease;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: #38bdf8;
+        color: #6366f1;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #1e293b !important;
-        color: #38bdf8 !important;
-        box-shadow: none;
-        border: 1px solid rgba(56, 189, 248, 0.2) !important;
+        background-color: #ffffff !important;
+        color: #6366f1 !important;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.15) !important;
     }
     
-    /* Subtle Metric Cards */
+    /* Premium Light-mode Metric Cards with Soft Shadow and Hover Effects */
     .metric-card {
-        background: #131924;
-        border: 1px solid #1e293b;
-        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
         padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
         margin-bottom: 20px;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         align-items: center;
         gap: 16px;
     }
     .metric-card:hover {
-        border-color: #334155;
-        background: #18202e;
+        transform: translateY(-4px);
+        border-color: rgba(99, 102, 241, 0.25);
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.08);
     }
+    
+    /* Pastel Icon Boxes */
     .metric-icon-box {
-        background: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 8px;
-        width: 42px;
-        height: 42px;
+        border-radius: 10px;
+        width: 44px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
     }
+    
     .metric-info {
         flex-grow: 1;
     }
     .metric-title {
         font-size: 12px;
         color: #64748b;
-        font-weight: 500;
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin: 0;
     }
     .metric-value {
-        font-size: 24px;
-        font-weight: 700;
-        color: #f1f5f9;
+        font-size: 26px;
+        font-weight: 750;
+        color: #0f172a;
         margin: 4px 0 0 0;
         letter-spacing: -0.01em;
     }
     .metric-delta {
         font-size: 11px;
-        color: #94a3b8;
+        color: #64748b;
         margin-top: 2px;
+        font-weight: 500;
     }
     
-    /* Clean Minimalist Header */
+    /* Minimalist Header with a Soft Top Accent Line */
     .app-header {
-        background: #131924;
+        background: #ffffff;
         padding: 24px 30px;
-        border-radius: 12px;
+        border-radius: 14px;
         margin-bottom: 24px;
-        border: 1px solid #1e293b;
+        border: 1px solid #e2e8f0;
+        border-top: 4px solid #6366f1;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
     }
     .app-title {
-        font-size: 30px;
-        font-weight: 700;
-        color: #f1f5f9;
+        font-size: 28px;
+        font-weight: 800;
+        color: #0f172a;
         margin: 0;
         letter-spacing: -0.02em;
     }
@@ -139,19 +145,20 @@ st.markdown("""
     
     /* Section Headers */
     .section-header {
-        border-bottom: 1px solid #1e293b;
+        border-bottom: 1px solid #e2e8f0;
         padding-bottom: 6px;
         margin-bottom: 18px;
         font-size: 18px;
-        font-weight: 600;
-        color: #94a3b8;
+        font-weight: 700;
+        color: #4f46e5;
+        letter-spacing: -0.01em;
     }
     
-    /* Styled code block borders */
+    /* Light Code Containers */
     .stCodeBlock {
-        background-color: #05070b !important;
+        background-color: #f8fafc !important;
         border-radius: 8px;
-        border: 1px solid #1e293b;
+        border: 1px solid #e2e8f0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -186,7 +193,7 @@ with st.spinner("Initializing performance data..."):
 # ----------------------------------------------------
 # SIDEBAR CONTROLS
 # ----------------------------------------------------
-st.sidebar.markdown("<div style='text-align: center; padding: 20px 0;'><h3 style='color:#f8fafc; font-weight:700; margin:0; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3><p style='color:#475569; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;'>Hierarchical Engine</p></div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='text-align: center; padding: 15px 0;'><h3 style='color:#4f46e5; font-weight:800; margin:0; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3><p style='color:#64748b; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;'>Hierarchical Engine</p></div>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 app_mode = st.sidebar.radio(
@@ -196,12 +203,12 @@ app_mode = st.sidebar.radio(
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-<div style='background: #131924; border: 1px solid #1e293b; border-radius: 8px; padding: 14px;'>
-    <p style='color: #475569; font-size: 10px; font-weight:600; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;'>Engine Diagnostics</p>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Transactions:</span><span style='color: #cbd5e1; font-weight: 500;'>69,371</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Unique Series:</span><span style='color: #cbd5e1; font-weight: 500;'>4,548</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Base Model:</span><span style='color: #94a3b8; font-weight: 500;'>AutoARIMA</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Reconciliation:</span><span style='color: #38bdf8; font-weight: 500;'>Bottom-Up</span></div>
+<div style='background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px;'>
+    <p style='color: #64748b; font-size: 10px; font-weight:600; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;'>Engine Diagnostics</p>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Transactions:</span><span style='color: #0f172a; font-weight: 500;'>69,371</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Unique Series:</span><span style='color: #0f172a; font-weight: 500;'>4,548</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Base Model:</span><span style='color: #4f46e5; font-weight: 500;'>AutoARIMA</span></div>
+    <div style='color: #64748b; display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span>Reconciliation:</span><span style='color: #10b981; font-weight: 500;'>Bottom-Up</span></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -211,7 +218,7 @@ st.sidebar.markdown("""
 st.markdown("""
 <div class="app-header">
     <div class="app-title">🚗 Car Sales Hierarchical Forecasting</div>
-    <div class="app-subtitle">A sleek, mathematical forecasting pipeline leveraging Nixtla's StatsForecast & Bottom-Up Reconciliation</div>
+    <div class="app-subtitle">An interactive visual explorer for time series hierarchical forecasting pipeline</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -234,8 +241,8 @@ if app_mode == "Overview Dashboard":
     with m1:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            <div class="metric-icon-box" style="background: rgba(99, 102, 241, 0.08);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Sales Volume</div>
@@ -248,8 +255,8 @@ if app_mode == "Overview Dashboard":
     with m2:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <div class="metric-icon-box" style="background: rgba(16, 185, 129, 0.08);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Total Revenue</div>
@@ -262,8 +269,8 @@ if app_mode == "Overview Dashboard":
     with m3:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r="3"/></svg>
+            <div class="metric-icon-box" style="background: rgba(245, 158, 11, 0.08);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r="3"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Avg Price</div>
@@ -276,8 +283,8 @@ if app_mode == "Overview Dashboard":
     with m4:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="metric-icon-box" style="background: rgba(239, 68, 68, 0.06);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Top Region</div>
@@ -299,17 +306,19 @@ if app_mode == "Overview Dashboard":
             x=monthly_sales['month_start'],
             y=monthly_sales['sales'],
             mode='lines',
-            line=dict(color='#475569', width=2), # Subtle gray line
+            fill='tozeroy',
+            fillcolor='rgba(99, 102, 241, 0.04)', # Soft pastel indigo area
+            line=dict(color='#6366f1', width=3), # Soft indigo line
             name="Monthly Sales"
         ))
         fig_trend.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font_color='#94a3b8',
+            font_color='#475569',
             margin=dict(l=10, r=10, t=10, b=10),
             height=320,
-            xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
-            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
+            xaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
+            yaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
             hovermode="x"
         )
         st.plotly_chart(fig_trend, use_container_width=True)
@@ -319,12 +328,12 @@ if app_mode == "Overview Dashboard":
         region_sales = df_raw['dealer_region'].value_counts().reset_index()
         region_sales.columns = ['region', 'sales']
         
-        # Muted layout colors
+        # Pastel layout colors
         fig_pie = go.Figure(data=[go.Pie(
             labels=region_sales['region'],
             values=region_sales['sales'],
             hole=0.6,
-            marker=dict(colors=['#1e293b', '#334155', '#475569', '#64748b', '#94a3b8']), # Muted grayscale/steel tones
+            marker=dict(colors=['#818cf8', '#a78bfa', '#f472b6', '#fb7185', '#38bdf8']), # Pastel palette
             textinfo='percent',
             textposition='inside',
             showlegend=True
@@ -332,7 +341,7 @@ if app_mode == "Overview Dashboard":
         fig_pie.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font_color='#94a3b8',
+            font_color='#475569',
             margin=dict(l=10, r=10, t=10, b=10),
             height=320,
             legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
@@ -351,15 +360,15 @@ if app_mode == "Overview Dashboard":
         anom_cols = st.columns(len(anomalies))
         for idx, row in enumerate(anomalies.itertuples()):
             is_high = row.z_score > 0
-            color = "#38bdf8" if is_high else "#94a3b8"
+            color = "#6366f1" if is_high else "#ef4444"
             arrow = "↑" if is_high else "↓"
             status = "Spike" if is_high else "Dip"
             with anom_cols[idx]:
                 st.markdown(f"""
-                <div style="background: #131924; border: 1px solid #1e293b; border-left: 3px solid {color}; border-radius: 6px; padding: 12px; text-align: left;">
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid {color}; border-radius: 8px; padding: 14px; text-align: left; box-shadow: 0 2px 8px rgba(0,0,0,0.01);">
                     <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">{status} Detected</div>
-                    <div style="font-size: 14px; font-weight: 700; color: #f1f5f9; margin-top: 2px;">{row.month_start.strftime('%B %Y')}</div>
-                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">Sales: {row.sales} <span style="color: {color};">({row.z_score:+.1f} SD)</span></div>
+                    <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 2px;">{row.month_start.strftime('%B %Y')}</div>
+                    <div style="font-size: 12px; color: #334155; margin-top: 4px;">Sales: {row.sales} <span style="color: {color}; font-weight: 600;">({row.z_score:+.1f} SD)</span></div>
                 </div>
                 """, unsafe_allow_html=True)
     else:
@@ -373,22 +382,22 @@ elif app_mode == "Interactive Drilldown & EDA":
     st.markdown("<div class='section-header'>🌳 Interactive Drilldown Hierarchy</div>", unsafe_allow_html=True)
     
     st.markdown("""
-    Explore the hierarchical distribution of sales. Click on any Region tile to drill down into Brands (Companies) and Body Styles.
+    Explore the hierarchical structure of sales. Click on any Region tile to drill down into Brands (Companies) and Body Styles.
     """)
     
-    # Treemap Chart (Using custom subtle color scale)
+    # Treemap Chart (Using custom pastel color scale)
     fig_tree = px.treemap(
         df_raw,
         path=['dealer_region', 'company', 'body_style'],
         values='price_',
         color='price_',
-        color_continuous_scale=[[0, '#131924'], [0.5, '#475569'], [1.0, '#38bdf8']], # Custom dark to steel-blue scale
+        color_continuous_scale=[[0, '#f5f3ff'], [0.5, '#c7d2fe'], [1.0, '#818cf8']], # Light pastel purple scale
         labels={'price_': 'Total Revenue ($)', 'dealer_region': 'Region', 'company': 'Brand', 'body_style': 'Body Style'}
     )
     fig_tree.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font_color='#94a3b8',
+        font_color='#475569',
         margin=dict(l=10, r=10, t=10, b=10),
         height=500
     )
@@ -400,15 +409,15 @@ elif app_mode == "Interactive Drilldown & EDA":
     with s1:
         st.markdown("##### Top 10 Vehicle Brands by Revenue")
         top_companies = df_raw.groupby('company')['price_'].sum().reset_index().sort_values('price_', ascending=False).head(10)
-        fig_c = px.bar(top_companies, x='price_', y='company', orientation='h', color='price_', color_continuous_scale='Cividis')
+        fig_c = px.bar(top_companies, x='price_', y='company', orientation='h', color='price_', color_continuous_scale='Purples')
         fig_c.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', 
             plot_bgcolor='rgba(0,0,0,0)', 
-            font_color='#94a3b8', 
+            font_color='#475569', 
             height=260, 
             coloraxis_showscale=False, 
             yaxis=dict(autorange="reversed"),
-            xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
+            xaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
             margin=dict(l=10, r=10, t=10, b=10)
         )
         st.plotly_chart(fig_c, use_container_width=True)
@@ -417,14 +426,14 @@ elif app_mode == "Interactive Drilldown & EDA":
         st.markdown("##### Brand Price Distribution Matrix")
         top_companies_list = top_companies['company'].tolist()
         df_top_c = df_raw[df_raw['company'].isin(top_companies_list)]
-        fig_box = px.box(df_top_c, x='company', y='price_', color_discrete_sequence=['#475569'])
+        fig_box = px.box(df_top_c, x='company', y='price_', color_discrete_sequence=['#818cf8']) # Muted pastel blue
         fig_box.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', 
             plot_bgcolor='rgba(0,0,0,0)', 
-            font_color='#94a3b8', 
+            font_color='#475569', 
             height=260, 
             margin=dict(l=10, r=10, t=10, b=10),
-            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)')
+            yaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)')
         )
         st.plotly_chart(fig_box, use_container_width=True)
 
@@ -533,7 +542,7 @@ elif app_mode == "Forecast Simulation":
             st.error(f"⚠️ Forecast predictions not available for series `{selected_unique_id}`.")
         else:
             # ----------------------------------------------------
-            # MINIMALIST SCENARIO SIMULATOR
+            # INTERACTIVE SCENARIO SIMULATOR
             # ----------------------------------------------------
             st.markdown("##### ⚡ Real-Time Scenario Planner")
             
@@ -541,8 +550,8 @@ elif app_mode == "Forecast Simulation":
             with sim_col_1:
                 growth_slider = st.slider(
                     "Simulated Growth Shift (%)",
-                    min_value=-55,
-                    max_value=55,
+                    min_value=-50,
+                    max_value=50,
                     value=0,
                     step=5,
                     help="Shift the reconciled forecast path."
@@ -567,42 +576,42 @@ elif app_mode == "Forecast Simulation":
             # Reconcile plotting with subtle colors
             fig = go.Figure()
             
-            # History (Steel gray)
+            # History (Muted gray)
             fig.add_trace(go.Scatter(
                 x=hist_monthly['ds'],
                 y=hist_monthly['y'],
                 name='Historical Sales',
-                line=dict(color='#64748b', width=2),
+                line=dict(color='#94a3b8', width=2),
                 mode='lines+markers',
                 marker=dict(size=4)
             ))
             
-            # Base AutoARIMA (Dashed slate)
+            # Base AutoARIMA (Dashed light gray)
             fig.add_trace(go.Scatter(
                 x=series_fcst['ds'],
                 y=series_fcst['AutoARIMA'],
                 name='Base AutoARIMA Forecast',
-                line=dict(color='#475569', width=1.5, dash='dash'),
+                line=dict(color='#cbd5e1', width=1.5, dash='dash'),
                 mode='lines'
             ))
             
-            # Reconciled BottomUp (Sleek sky blue)
+            # Reconciled BottomUp (Pastel Indigo)
             fig.add_trace(go.Scatter(
                 x=series_fcst['ds'],
                 y=series_fcst['AutoARIMA/BottomUp'],
                 name='Reconciled Forecast',
-                line=dict(color='#38bdf8', width=2.5),
+                line=dict(color='#6366f1', width=3),
                 mode='lines+markers',
-                marker=dict(size=5)
+                marker=dict(size=6)
             ))
             
-            # Simulated Scenario (Subtle soft purple)
+            # Simulated Scenario (Pastel Rose Pink)
             if growth_slider != 0 or noise_slider != 0:
                 fig.add_trace(go.Scatter(
                     x=series_fcst['ds'],
                     y=series_fcst['Simulated'],
                     name='Simulated Scenario',
-                    line=dict(color='#818cf8', width=2, dash='dot'),
+                    line=dict(color='#ec4899', width=2.5, dash='dot'),
                     mode='lines+markers',
                     marker=dict(size=4)
                 ))
@@ -612,9 +621,9 @@ elif app_mode == "Forecast Simulation":
                 yaxis_title="Monthly Sales Volume",
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
-                font_color='#94a3b8',
-                xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
-                yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
+                font_color='#475569',
+                xaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
+                yaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
                 hovermode="x unified",
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
                 height=450,
@@ -638,7 +647,7 @@ elif app_mode == "Forecast Simulation":
                     "Simulated Scenario Total", 
                     f"{int(round(fcst_sum_simulated))} units",
                     delta=f"{delta_sim:+.0f} vs base reconciled",
-                    delta_color="off" # Grey delta instead of red/green
+                    delta_color="off" # Grey delta
                 )
                 
             # Table details
