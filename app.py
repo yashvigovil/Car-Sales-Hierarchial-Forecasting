@@ -13,10 +13,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for modern glassmorphism & premium UI
+# Custom CSS for subtle, minimalist & high-end UI
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
     
     html, body, [class*="css"] {
         font-family: 'Outfit', sans-serif;
@@ -24,71 +24,68 @@ st.markdown("""
     
     /* Main Layout Background */
     .stApp {
-        background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%) !important;
-        color: #f8fafc;
+        background-color: #090d16 !important;
+        color: #cbd5e1;
     }
     
     /* Sidebar styling */
     section[data-testid="stSidebar"] {
-        background-color: #0b0f19 !important;
+        background-color: #05070b !important;
         border-right: 1px solid #1e293b;
     }
     
     /* Custom tab container styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: rgba(15, 23, 42, 0.4);
-        padding: 6px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        gap: 6px;
+        background-color: #131924;
+        padding: 5px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
     }
     .stTabs [data-baseweb="tab"] {
-        height: 45px;
+        height: 38px;
         white-space: pre-wrap;
         background-color: transparent;
-        border-radius: 8px;
-        color: #94a3b8;
-        font-weight: 600;
+        border-radius: 6px;
+        color: #64748b;
+        font-weight: 500;
+        font-size: 14px;
         border: none;
-        padding: 0 16px;
-        transition: all 0.3s ease;
+        padding: 0 14px;
+        transition: all 0.2s ease;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: #3b82f6;
+        color: #38bdf8;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #3b82f6 !important;
-        color: white !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        background-color: #1e293b !important;
+        color: #38bdf8 !important;
+        box-shadow: none;
+        border: 1px solid rgba(56, 189, 248, 0.2) !important;
     }
     
-    /* Glassmorphism Metric Cards */
+    /* Subtle Metric Cards */
     .metric-card {
-        background: rgba(15, 23, 42, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 18px;
-        padding: 22px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: #131924;
+        border: 1px solid #1e293b;
+        border-radius: 12px;
+        padding: 20px;
         margin-bottom: 20px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 16px;
     }
     .metric-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(59, 130, 246, 0.4);
-        box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        border-color: #334155;
+        background: #18202e;
     }
     .metric-icon-box {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 12px;
-        width: 48px;
-        height: 48px;
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        width: 42px;
+        height: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -98,77 +95,63 @@ st.markdown("""
         flex-grow: 1;
     }
     .metric-title {
-        font-size: 13px;
-        color: #94a3b8;
-        font-weight: 600;
+        font-size: 12px;
+        color: #64748b;
+        font-weight: 500;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.05em;
         margin: 0;
     }
     .metric-value {
-        font-size: 28px;
-        font-weight: 800;
-        color: #ffffff;
+        font-size: 24px;
+        font-weight: 700;
+        color: #f1f5f9;
         margin: 4px 0 0 0;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.01em;
     }
     .metric-delta {
         font-size: 11px;
-        color: #10b981;
-        font-weight: 500;
+        color: #94a3b8;
         margin-top: 2px;
     }
     
-    /* Header Block */
+    /* Clean Minimalist Header */
     .app-header {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
-        padding: 35px 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        margin-bottom: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        position: relative;
-        overflow: hidden;
-    }
-    .app-header::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        right: -10%;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-        pointer-events: none;
+        background: #131924;
+        padding: 24px 30px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+        border: 1px solid #1e293b;
     }
     .app-title {
-        font-size: 38px;
-        font-weight: 800;
-        color: #ffffff;
+        font-size: 30px;
+        font-weight: 700;
+        color: #f1f5f9;
         margin: 0;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.02em;
     }
     .app-subtitle {
-        font-size: 16px;
-        color: #93c5fd;
-        margin-top: 8px;
+        font-size: 14px;
+        color: #64748b;
+        margin-top: 6px;
         font-weight: 400;
-        opacity: 0.95;
     }
     
-    /* Segment divider */
+    /* Section Headers */
     .section-header {
-        border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-        padding-bottom: 8px;
-        margin-bottom: 20px;
-        font-weight: 700;
-        color: #3b82f6;
+        border-bottom: 1px solid #1e293b;
+        padding-bottom: 6px;
+        margin-bottom: 18px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #94a3b8;
     }
     
-    /* Styled code containers */
+    /* Styled code block borders */
     .stCodeBlock {
-        background-color: #0b0f19 !important;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background-color: #05070b !important;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -203,7 +186,7 @@ with st.spinner("Initializing performance data..."):
 # ----------------------------------------------------
 # SIDEBAR CONTROLS
 # ----------------------------------------------------
-st.sidebar.markdown("<div style='text-align: center; padding: 25px 0;'><h2 style='color:#3b82f6; font-weight:800; margin:0; letter-spacing:-0.03em;'>⚡ AUTOFCAST</h2><p style='color:#64748b; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px;'>Hierarchical Engine</p></div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='text-align: center; padding: 20px 0;'><h3 style='color:#f8fafc; font-weight:700; margin:0; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3><p style='color:#475569; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;'>Hierarchical Engine</p></div>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 app_mode = st.sidebar.radio(
@@ -213,12 +196,12 @@ app_mode = st.sidebar.radio(
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-<div style='background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px;'>
-    <p style='color: #94a3b8; font-size: 11px; font-weight:600; text-transform: uppercase; margin-bottom: 8px;'>Engine Diagnostics</p>
-    <div style='display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;'><span style='color: #64748b;'>Transactions:</span><span style='color: #f8fafc; font-weight: 600;'>69,371</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;'><span style='color: #64748b;'>Unique Series:</span><span style='color: #f8fafc; font-weight: 600;'>4,548</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;'><span style='color: #64748b;'>Base Model:</span><span style='color: #3b82f6; font-weight: 600;'>AutoARIMA</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 13px; margin: 4px 0;'><span style='color: #64748b;'>Reconciliation:</span><span style='color: #10b981; font-weight: 600;'>Bottom-Up</span></div>
+<div style='background: #131924; border: 1px solid #1e293b; border-radius: 8px; padding: 14px;'>
+    <p style='color: #475569; font-size: 10px; font-weight:600; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;'>Engine Diagnostics</p>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Transactions:</span><span style='color: #cbd5e1; font-weight: 500;'>69,371</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Unique Series:</span><span style='color: #cbd5e1; font-weight: 500;'>4,548</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Base Model:</span><span style='color: #94a3b8; font-weight: 500;'>AutoARIMA</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Reconciliation:</span><span style='color: #38bdf8; font-weight: 500;'>Bottom-Up</span></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -228,7 +211,7 @@ st.sidebar.markdown("""
 st.markdown("""
 <div class="app-header">
     <div class="app-title">🚗 Car Sales Hierarchical Forecasting</div>
-    <div class="app-subtitle">A state-of-the-art interactive forecasting dashboard leveraging Nixtla's StatsForecast & Bottom-Up Reconciliation</div>
+    <div class="app-subtitle">A sleek, mathematical forecasting pipeline leveraging Nixtla's StatsForecast & Bottom-Up Reconciliation</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -237,28 +220,27 @@ st.markdown("""
 # TAB 1: OVERVIEW DASHBOARD
 # ----------------------------------------------------
 if app_mode == "Overview Dashboard":
-    st.markdown("<h3 class='section-header'>📊 Executive Performance Overview</h3>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>📊 Executive Performance Overview</div>", unsafe_allow_html=True)
     
     # KPI Calculations
     total_sales = len(df_raw)
     total_revenue = df_raw['price_'].sum()
     avg_price = df_raw['price_'].mean()
     top_region = df_raw['dealer_region'].value_counts().index[0]
-    top_company = df_raw['company'].value_counts().index[0]
     
-    # Row of Metrics
+    # Row of Metrics (Minimalist style)
     m1, m2, m3, m4 = st.columns(4)
     
     with m1:
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Sales Volume</div>
                 <div class="metric-value">{total_sales:,}</div>
-                <div class="metric-delta">Gross Transactions</div>
+                <div class="metric-delta">Gross units</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -267,12 +249,12 @@ if app_mode == "Overview Dashboard":
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Total Revenue</div>
                 <div class="metric-value">${total_revenue/1e6:.2f}M</div>
-                <div class="metric-delta">Gross Bookings</div>
+                <div class="metric-delta">Gross bookings</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -281,12 +263,12 @@ if app_mode == "Overview Dashboard":
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r="3"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r="3"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Avg Price</div>
                 <div class="metric-value">${avg_price:,.0f}</div>
-                <div class="metric-delta">Average transaction</div>
+                <div class="metric-delta">Per vehicle</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -295,12 +277,12 @@ if app_mode == "Overview Dashboard":
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div class="metric-info">
                 <div class="metric-title">Top Region</div>
-                <div class="metric-value" style="font-size: 24px; padding-top: 4px;">{top_region}</div>
-                <div class="metric-delta">Market Share Leader</div>
+                <div class="metric-value" style="font-size: 22px; padding-top: 2px;">{top_region}</div>
+                <div class="metric-delta">Volume leader</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -309,62 +291,59 @@ if app_mode == "Overview Dashboard":
     c1, c2 = st.columns([2, 1])
     
     with c1:
-        st.markdown("#### Historical Sales Volatility & Trend")
+        st.markdown("##### Historical Monthly Sales Volume")
         monthly_sales = df_raw.groupby('month_start').size().reset_index(name='sales')
         
-        # Plotly layout with custom glass dark theme
         fig_trend = go.Figure()
         fig_trend.add_trace(go.Scatter(
             x=monthly_sales['month_start'],
             y=monthly_sales['sales'],
             mode='lines',
-            fill='tozeroy',
-            fillcolor='rgba(59, 130, 246, 0.08)',
-            line=dict(color='#3b82f6', width=3.5),
+            line=dict(color='#475569', width=2), # Subtle gray line
             name="Monthly Sales"
         ))
         fig_trend.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font_color='#cbd5e1',
+            font_color='#94a3b8',
             margin=dict(l=10, r=10, t=10, b=10),
-            height=360,
-            xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.04)'),
-            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.04)'),
+            height=320,
+            xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
+            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
             hovermode="x"
         )
         st.plotly_chart(fig_trend, use_container_width=True)
 
     with c2:
-        st.markdown("#### Sales Distribution by Region")
+        st.markdown("##### Sales Share by Region")
         region_sales = df_raw['dealer_region'].value_counts().reset_index()
         region_sales.columns = ['region', 'sales']
         
+        # Muted layout colors
         fig_pie = go.Figure(data=[go.Pie(
             labels=region_sales['region'],
             values=region_sales['sales'],
-            hole=0.5,
-            marker=dict(colors=['#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#dbeafe']),
-            textinfo='label+percent',
+            hole=0.6,
+            marker=dict(colors=['#1e293b', '#334155', '#475569', '#64748b', '#94a3b8']), # Muted grayscale/steel tones
+            textinfo='percent',
             textposition='inside',
-            showlegend=False
+            showlegend=True
         )])
         fig_pie.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font_color='#cbd5e1',
+            font_color='#94a3b8',
             margin=dict(l=10, r=10, t=10, b=10),
-            height=360
+            height=320,
+            legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    # Anomaly Detection Highlight Section
-    st.markdown("#### 🚨 Historical Sales Anomaly Detection")
+    # Anomaly Detection Highlight Section (Subtle slate panels)
+    st.markdown("##### 🚨 Historical Sales Anomalies")
     sales_series = df_raw.groupby('month_start').size().reset_index(name='sales')
     sales_mean = sales_series['sales'].mean()
     sales_std = sales_series['sales'].std()
-    
-    # Define thresholds for outlier (z-score > 1.8)
     sales_series['z_score'] = (sales_series['sales'] - sales_mean) / sales_std
     anomalies = sales_series[sales_series['z_score'].abs() > 1.8]
     
@@ -372,15 +351,15 @@ if app_mode == "Overview Dashboard":
         anom_cols = st.columns(len(anomalies))
         for idx, row in enumerate(anomalies.itertuples()):
             is_high = row.z_score > 0
-            color = "#10b981" if is_high else "#ef4444"
-            arrow = "↗" if is_high else "↘"
-            status = "Spike" if is_high else "Drop"
+            color = "#38bdf8" if is_high else "#94a3b8"
+            arrow = "↑" if is_high else "↓"
+            status = "Spike" if is_high else "Dip"
             with anom_cols[idx]:
                 st.markdown(f"""
-                <div style="background: rgba(15,23,42,0.5); border: 1px solid {color}40; border-radius: 12px; padding: 15px; text-align: center;">
-                    <span style="color: {color}; font-weight: 800; font-size: 14px;">{arrow} {status} Detected</span>
-                    <h5 style="margin: 6px 0; color: #f8fafc;">{row.month_start.strftime('%B %Y')}</h5>
-                    <span style="font-size: 12px; color: #94a3b8;">Sales: <strong>{row.sales}</strong> ({row.z_score:+.2f} SD)</span>
+                <div style="background: #131924; border: 1px solid #1e293b; border-left: 3px solid {color}; border-radius: 6px; padding: 12px; text-align: left;">
+                    <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">{status} Detected</div>
+                    <div style="font-size: 14px; font-weight: 700; color: #f1f5f9; margin-top: 2px;">{row.month_start.strftime('%B %Y')}</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">Sales: {row.sales} <span style="color: {color};">({row.z_score:+.1f} SD)</span></div>
                 </div>
                 """, unsafe_allow_html=True)
     else:
@@ -391,48 +370,62 @@ if app_mode == "Overview Dashboard":
 # TAB 2: INTERACTIVE DRILLDOWN & EDA
 # ----------------------------------------------------
 elif app_mode == "Interactive Drilldown & EDA":
-    st.markdown("<h3 class='section-header'>🌳 Interactive Drilldown Hierarchy</h3>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>🌳 Interactive Drilldown Hierarchy</div>", unsafe_allow_html=True)
     
     st.markdown("""
-    Use the **Interactive Treemap** below to explore the structure of the car sales. 
-    Click on any **Region** block to zoom into specific **Brands (Companies)**, and click again to drill down to **Body Styles**.
+    Explore the hierarchical distribution of sales. Click on any Region tile to drill down into Brands (Companies) and Body Styles.
     """)
     
-    # Treemap Chart
+    # Treemap Chart (Using custom subtle color scale)
     fig_tree = px.treemap(
         df_raw,
         path=['dealer_region', 'company', 'body_style'],
         values='price_',
         color='price_',
-        color_continuous_scale='Blues',
+        color_continuous_scale=[[0, '#131924'], [0.5, '#475569'], [1.0, '#38bdf8']], # Custom dark to steel-blue scale
         labels={'price_': 'Total Revenue ($)', 'dealer_region': 'Region', 'company': 'Brand', 'body_style': 'Body Style'}
     )
     fig_tree.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font_color='#cbd5e1',
+        font_color='#94a3b8',
         margin=dict(l=10, r=10, t=10, b=10),
-        height=550
+        height=500
     )
     st.plotly_chart(fig_tree, use_container_width=True)
 
     # Detailed segments
-    st.markdown("#### Segment breakdown matrix")
     s1, s2 = st.columns(2)
     
     with s1:
-        st.markdown("##### Top 10 Vehicle Companies by Net Revenue")
+        st.markdown("##### Top 10 Vehicle Brands by Revenue")
         top_companies = df_raw.groupby('company')['price_'].sum().reset_index().sort_values('price_', ascending=False).head(10)
-        fig_c = px.bar(top_companies, x='price_', y='company', orientation='h', color='price_', color_continuous_scale='Blues')
-        fig_c.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='#cbd5e1', height=300, coloraxis_showscale=False, yaxis=dict(autorange="reversed"))
+        fig_c = px.bar(top_companies, x='price_', y='company', orientation='h', color='price_', color_continuous_scale='Cividis')
+        fig_c.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)', 
+            plot_bgcolor='rgba(0,0,0,0)', 
+            font_color='#94a3b8', 
+            height=260, 
+            coloraxis_showscale=False, 
+            yaxis=dict(autorange="reversed"),
+            xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
+            margin=dict(l=10, r=10, t=10, b=10)
+        )
         st.plotly_chart(fig_c, use_container_width=True)
         
     with s2:
-        st.markdown("##### Brand Price Distribution Analysis")
+        st.markdown("##### Brand Price Distribution Matrix")
         top_companies_list = top_companies['company'].tolist()
         df_top_c = df_raw[df_raw['company'].isin(top_companies_list)]
-        fig_box = px.box(df_top_c, x='company', y='price_', color='company', color_discrete_sequence=px.colors.qualitative.Safe)
-        fig_box.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='#cbd5e1', height=300, showlegend=False)
+        fig_box = px.box(df_top_c, x='company', y='price_', color_discrete_sequence=['#475569'])
+        fig_box.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)', 
+            plot_bgcolor='rgba(0,0,0,0)', 
+            font_color='#94a3b8', 
+            height=260, 
+            margin=dict(l=10, r=10, t=10, b=10),
+            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)')
+        )
         st.plotly_chart(fig_box, use_container_width=True)
 
 
@@ -440,13 +433,13 @@ elif app_mode == "Interactive Drilldown & EDA":
 # TAB 3: FORECAST SIMULATION
 # ----------------------------------------------------
 elif app_mode == "Forecast Simulation":
-    st.markdown("<h3 class='section-header'>📈 Forecast Viewer & Scenario Planner</h3>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>📈 Forecast Viewer & Scenario Planner</div>", unsafe_allow_html=True)
     
     if df_forecast is None:
-        st.error("Missing prediction output file (`reconciled_forecast.csv`). Please run the pipeline script.")
+        st.error("Missing prediction output file (`reconciled_forecast.csv`).")
     else:
         # Dynamic hierarchy selector panel
-        st.markdown("#### Define Selector Parameters")
+        st.markdown("##### Select Series node")
         
         # Grid layout for selectors
         col_sel_1, col_sel_2 = st.columns(2)
@@ -515,7 +508,7 @@ elif app_mode == "Forecast Simulation":
                     selected_color = st.selectbox("Select Color", filtered_colors)
                 selected_unique_id = f"{selected_region}/{selected_company}/{selected_model}/{selected_color}"
 
-        st.markdown(f"Currently Analyzing Series: ` {selected_unique_id} `")
+        st.markdown(f"<span style='color: #64748b;'>Active Series Node:</span> ` {selected_unique_id} `", unsafe_allow_html=True)
         
         # Filter historical data
         hist_df = df_raw.copy()
@@ -537,78 +530,81 @@ elif app_mode == "Forecast Simulation":
         series_fcst = df_forecast[df_forecast['unique_id'] == selected_unique_id].sort_values('ds')
         
         if len(series_fcst) == 0:
-            st.error(f"⚠️ Could not find forecast predictions for series `{selected_unique_id}`. This series might have been pruned as sparse (under 12 active sales months) during preprocessing.")
+            st.error(f"⚠️ Forecast predictions not available for series `{selected_unique_id}`.")
         else:
             # ----------------------------------------------------
-            # INTERACTIVE SCENARIO SIMULATOR
+            # MINIMALIST SCENARIO SIMULATOR
             # ----------------------------------------------------
-            st.markdown("#### ⚡ Real-Time Scenario Planner")
+            st.markdown("##### ⚡ Real-Time Scenario Planner")
             
             sim_col_1, sim_col_2 = st.columns(2)
             with sim_col_1:
                 growth_slider = st.slider(
                     "Simulated Growth Shift (%)",
-                    min_value=-50,
-                    max_value=50,
+                    min_value=-55,
+                    max_value=55,
                     value=0,
                     step=5,
-                    help="Shift the reconciled forecast path upwards or downwards based on mock economic scenarios."
+                    help="Shift the reconciled forecast path."
                 )
             with sim_col_2:
                 noise_slider = st.slider(
-                    "Add Scenario Volatility (%)",
+                    "Add Volatility (%)",
                     min_value=0,
                     max_value=20,
                     value=0,
                     step=2,
-                    help="Introduce random market volatility into the simulated path."
+                    help="Add simulated market noise."
                 )
             
-            # Apply growth and noise simulated projections
+            # Apply growth and noise
             sim_ratio = 1 + (growth_slider / 100.0)
-            np.random.seed(42)  # Maintain stable noise paths
+            np.random.seed(42)
             noise_factors = 1.0 + (np.random.normal(0, noise_slider / 100.0, len(series_fcst)))
             
             series_fcst['Simulated'] = series_fcst['AutoARIMA/BottomUp'] * sim_ratio * noise_factors
             
-            # Re-plot interactive charts
+            # Reconcile plotting with subtle colors
             fig = go.Figure()
             
-            # History
+            # History (Steel gray)
             fig.add_trace(go.Scatter(
                 x=hist_monthly['ds'],
                 y=hist_monthly['y'],
                 name='Historical Sales',
-                line=dict(color='#3b82f6', width=3),
-                mode='lines+markers'
+                line=dict(color='#64748b', width=2),
+                mode='lines+markers',
+                marker=dict(size=4)
             ))
             
-            # Unreconciled AutoARIMA
+            # Base AutoARIMA (Dashed slate)
             fig.add_trace(go.Scatter(
                 x=series_fcst['ds'],
                 y=series_fcst['AutoARIMA'],
                 name='Base AutoARIMA Forecast',
-                line=dict(color='#f97316', width=2, dash='dash'),
-                mode='lines+markers'
+                line=dict(color='#475569', width=1.5, dash='dash'),
+                mode='lines'
             ))
             
-            # Reconciled BottomUp
+            # Reconciled BottomUp (Sleek sky blue)
             fig.add_trace(go.Scatter(
                 x=series_fcst['ds'],
                 y=series_fcst['AutoARIMA/BottomUp'],
-                name='Reconciled Bottom-Up Forecast',
-                line=dict(color='#10b981', width=3),
-                mode='lines+markers'
+                name='Reconciled Forecast',
+                line=dict(color='#38bdf8', width=2.5),
+                mode='lines+markers',
+                marker=dict(size=5)
             ))
             
-            # Simulated Scenario
+            # Simulated Scenario (Subtle soft purple)
             if growth_slider != 0 or noise_slider != 0:
                 fig.add_trace(go.Scatter(
                     x=series_fcst['ds'],
                     y=series_fcst['Simulated'],
-                    name='Simulated Scenario Path',
-                    line=dict(color='#ec4899', width=3, dash='dot'),
-                    mode='lines+markers'
+                    name='Simulated Scenario',
+                    line=dict(color='#818cf8', width=2, dash='dot'),
+                    mode='lines+markers',
+                    marker=dict(size=4)
                 ))
             
             fig.update_layout(
@@ -616,31 +612,33 @@ elif app_mode == "Forecast Simulation":
                 yaxis_title="Monthly Sales Volume",
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
-                font_color='#cbd5e1',
-                xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.04)'),
-                yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.04)'),
+                font_color='#94a3b8',
+                xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
+                yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)'),
                 hovermode="x unified",
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-                height=480
+                height=450,
+                margin=dict(l=10, r=10, t=10, b=10)
             )
             st.plotly_chart(fig, use_container_width=True)
             
-            # Show summary stats
+            # Muted statistics metrics
             fcst_sum_reconciled = series_fcst['AutoARIMA/BottomUp'].sum()
             fcst_sum_simulated = series_fcst['Simulated'].sum()
             hist_sum_last_year = hist_monthly[hist_monthly['ds'] >= '2026-01-01']['y'].sum()
             
             s_col1, s_col2, s_col3 = st.columns(3)
             with s_col1:
-                st.metric("Historical Sales (2026)", f"{int(hist_sum_last_year)} cars")
+                st.metric("Historical Sales (2026)", f"{int(hist_sum_last_year)} units")
             with s_col2:
-                st.metric("Reconciled Forecast (2027)", f"{int(round(fcst_sum_reconciled))} cars")
+                st.metric("Reconciled Forecast (2027)", f"{int(round(fcst_sum_reconciled))} units")
             with s_col3:
                 delta_sim = fcst_sum_simulated - fcst_sum_reconciled
                 st.metric(
                     "Simulated Scenario Total", 
-                    f"{int(round(fcst_sum_simulated))} cars",
-                    delta=f"{delta_sim:+.0f} vs base reconciled"
+                    f"{int(round(fcst_sum_simulated))} units",
+                    delta=f"{delta_sim:+.0f} vs base reconciled",
+                    delta_color="off" # Grey delta instead of red/green
                 )
                 
             # Table details
@@ -663,11 +661,11 @@ elif app_mode == "Forecast Simulation":
 # TAB 4: PIPELINE & CODE ARCHITECTURE
 # ----------------------------------------------------
 elif app_mode == "Pipeline & Code Architecture":
-    st.markdown("<h3 class='section-header'>🛠️ Data Pipeline & Code Architecture</h3>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>🛠️ Data Pipeline & Code Architecture</div>", unsafe_allow_html=True)
     
     st.markdown("""
     This project was originally developed inside **Databricks** as a hierarchical time series forecasting pipeline. 
-    Below is a breakdown of the three notebooks that make up the pipeline and how they map to this web dashboard.
+    Below is a breakdown of the notebooks that make up the pipeline.
     """)
     
     tab_ingest, tab_prep, tab_baseline, tab_reconcile = st.tabs([
