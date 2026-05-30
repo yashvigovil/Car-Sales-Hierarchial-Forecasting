@@ -238,32 +238,41 @@ app_mode = st.sidebar.radio(
 
 st.sidebar.markdown("---")
 
-# INTERACTIVE SIDEBAR Presets widget (Only shows relevance or overrides in Forecast Simulation tab)
-st.sidebar.markdown("<p style='color: #475569; font-size: 11px; font-weight:700; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.05em;'>Quick Simulation Presets</p>", unsafe_allow_html=True)
+# INTERACTIVE SIDEBAR Presets widget
+st.sidebar.markdown("<p style='color: #475569; font-size: 11px; font-weight:700; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.05em;'>Active Market Scenario</p>", unsafe_allow_html=True)
+
+# Presets mapping
+PRESETS = {
+    "Default Reconciled Forecast": {"growth": 0, "noise": 0},
+    "Summer Sales Surge (+15% Growth)": {"growth": 15, "noise": 3},
+    "Economic Contraction (-25% Drop)": {"growth": -25, "noise": 6},
+    "High Volatility Disruption": {"growth": 5, "noise": 15}
+}
 
 scenario_preset = st.sidebar.selectbox(
-    "Choose Market Scenario",
-    [
-        "Default Reconciled Forecast",
-        "Summer Sales Surge (+15% Growth)",
-        "Economic Contraction (-25% Drop)",
-        "High Volatility Disruption"
-    ]
+    "Choose Preset Scenario",
+    list(PRESETS.keys())
 )
 
-# Set slider values based on selection
-if scenario_preset == "Default Reconciled Forecast":
-    default_growth = 0
-    default_noise = 0
-elif scenario_preset == "Summer Sales Surge (+15% Growth)":
-    default_growth = 15
-    default_noise = 4
-elif scenario_preset == "Economic Contraction (-25% Drop)":
-    default_growth = -25
-    default_noise = 8
-elif scenario_preset == "High Volatility Disruption":
-    default_growth = 5
-    default_noise = 16
+selected_preset = PRESETS[scenario_preset]
+
+# Dynamically set session states when selection changes to resolve Streamlit gotchas
+if 'prev_preset' not in st.session_state or st.session_state['prev_preset'] != scenario_preset:
+    st.session_state['growth_slider'] = selected_preset["growth"]
+    st.session_state['noise_slider'] = selected_preset["noise"]
+    st.session_state['prev_preset'] = scenario_preset
+
+active_growth = st.session_state.get('growth_slider', 0)
+active_noise = st.session_state.get('noise_slider', 0)
+
+# Displays preset summary badge directly in the sidebar
+st.sidebar.markdown(f"""
+<div style='background: rgba(99, 102, 241, 0.05); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 6px; padding: 10px; margin-top: 8px;'>
+    <div style='font-size: 12px; color: #4f46e5; font-weight:700;'>Simulated Factors:</div>
+    <div style='font-size: 13px; color: #334155; margin-top: 4px;'>Growth Rate: <strong>{active_growth:+.0f}%</strong></div>
+    <div style='font-size: 13px; color: #334155;'>Noise Level: <strong>{active_noise}%</strong></div>
+</div>
+""", unsafe_allow_html=True)
 
 st.sidebar.markdown("---")
 
@@ -313,6 +322,22 @@ if app_mode == "Overview Dashboard":
     avg_price = df_raw['price_'].mean()
     top_region = df_raw['dealer_region'].value_counts().index[0]
     
+    # If a scenario preset is selected, calculate simulated 2027 metrics
+    # We sum all region level forecasts to get the total market forecast
+    regions_list = df_raw['dealer_region'].unique().tolist()
+    total_reconciled_fcst_sum = 0
+    total_simulated_fcst_sum = 0
+    
+    if df_forecast is not None:
+        df_reg_fcst = df_forecast[df_forecast['unique_id'].isin(regions_list)]
+        total_reconciled_fcst_sum = df_reg_fcst['AutoARIMA/BottomUp'].sum()
+        
+        sim_multiplier = 1 + (active_growth / 100.0)
+        # Apply deterministic noise for matching stats
+        np.random.seed(42)
+        noise_factors = 1.0 + (np.random.normal(0, active_noise / 100.0, len(df_reg_fcst)))
+        total_simulated_fcst_sum = (df_reg_fcst['AutoARIMA/BottomUp'] * sim_multiplier * noise_factors).sum()
+
     # Row of Metrics
     m1, m2, m3, m4 = st.columns(4)
     
@@ -325,7 +350,7 @@ if app_mode == "Overview Dashboard":
             <div class="metric-info">
                 <div class="metric-title">Sales Volume</div>
                 <div class="metric-value">{total_sales:,}</div>
-                <div class="metric-delta">Gross units</div>
+                <div class="metric-delta">Gross units (2022-2026)</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -345,15 +370,16 @@ if app_mode == "Overview Dashboard":
         """, unsafe_allow_html=True)
         
     with m3:
+        # Dynamic Next-Year Forecast Metric
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-icon-box" style="background: rgba(245, 158, 11, 0.08);">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r="3"/></svg>
             </div>
             <div class="metric-info">
-                <div class="metric-title">Avg Price</div>
-                <div class="metric-value">${avg_price:,.0f}</div>
-                <div class="metric-delta">Per vehicle</div>
+                <div class="metric-title">Simulated 2027 Sales</div>
+                <div class="metric-value" style="color: #6366f1;">{int(round(total_simulated_fcst_sum)):,}</div>
+                <div class="metric-delta">Scenario: {scenario_preset.split(" (")[0]}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -376,19 +402,53 @@ if app_mode == "Overview Dashboard":
     c1, c2 = st.columns([2, 1])
     
     with c1:
-        st.markdown("##### Historical Monthly Sales Volume")
+        st.markdown("##### Historical Sales and Future Scenario Projections")
         monthly_sales = df_raw.groupby('month_start').size().reset_index(name='sales')
         
+        # Aggregate forecast globally for plotting
+        if df_forecast is not None:
+            df_reg_fcst = df_forecast[df_forecast['unique_id'].isin(regions_list)]
+            monthly_fcst = df_reg_fcst.groupby('ds')[['AutoARIMA/BottomUp']].sum().reset_index()
+            monthly_fcst = monthly_fcst.sort_values('ds')
+            
+            # Apply growth and noise simulated projections
+            sim_ratio = 1 + (active_growth / 100.0)
+            np.random.seed(42)
+            noise_factors = 1.0 + (np.random.normal(0, active_noise / 100.0, len(monthly_fcst)))
+            monthly_fcst['Simulated'] = monthly_fcst['AutoARIMA/BottomUp'] * sim_ratio * noise_factors
+        
         fig_trend = go.Figure()
+        
+        # Historical Path
         fig_trend.add_trace(go.Scatter(
             x=monthly_sales['month_start'],
             y=monthly_sales['sales'],
             mode='lines',
             fill='tozeroy',
-            fillcolor='rgba(99, 102, 241, 0.04)',
-            line=dict(color='#6366f1', width=3),
-            name="Monthly Sales"
+            fillcolor='rgba(148, 163, 184, 0.03)',
+            line=dict(color='#94a3b8', width=2),
+            name="Historical Sales"
         ))
+        
+        # Reconciled Forecast Path (2027)
+        fig_trend.add_trace(go.Scatter(
+            x=monthly_fcst['ds'],
+            y=monthly_fcst['AutoARIMA/BottomUp'],
+            mode='lines+markers',
+            line=dict(color='#6366f1', width=3),
+            name="Base Reconciled Forecast"
+        ))
+        
+        # Scenario Simulated Path (2027)
+        if active_growth != 0 or active_noise != 0:
+            fig_trend.add_trace(go.Scatter(
+                x=monthly_fcst['ds'],
+                y=monthly_fcst['Simulated'],
+                mode='lines+markers',
+                line=dict(color='#ec4899', width=2.5, dash='dot'),
+                name="Simulated Scenario"
+            ))
+            
         fig_trend.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
@@ -397,7 +457,7 @@ if app_mode == "Overview Dashboard":
             height=320,
             xaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
             yaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
-            hovermode="x"
+            hovermode="x unified"
         )
         st.plotly_chart(fig_trend, use_container_width=True)
 
@@ -625,23 +685,23 @@ elif app_mode == "Forecast Simulation":
             
             sim_col_1, sim_col_2 = st.columns(2)
             with sim_col_1:
+                # Using key='growth_slider' synced with sidebar presets!
                 growth_slider = st.slider(
                     "Simulated Growth Shift (%)",
                     min_value=-50,
                     max_value=50,
-                    value=default_growth, # Linked to Sidebar Preset!
+                    key="growth_slider", 
                     step=5,
-                    key="growth_slider",
                     help="Shift the reconciled forecast path."
                 )
             with sim_col_2:
+                # Using key='noise_slider' synced with sidebar presets!
                 noise_slider = st.slider(
                     "Add Volatility (%)",
                     min_value=0,
                     max_value=20,
-                    value=default_noise, # Linked to Sidebar Preset!
-                    step=2,
                     key="noise_slider",
+                    step=2,
                     help="Add simulated market noise."
                 )
             
