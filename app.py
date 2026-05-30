@@ -28,9 +28,9 @@ st.markdown("""
         color: #334155;
     }
     
-    /* Sidebar styling - Clean Slate White */
+    /* Sidebar styling - Clean Gradient Slate White */
     section[data-testid="stSidebar"] {
-        background-color: #ffffff !important;
+        background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
         border-right: 1px solid #e2e8f0;
     }
     
@@ -160,6 +160,40 @@ st.markdown("""
         border-radius: 8px;
         border: 1px solid #e2e8f0;
     }
+
+    /* Sidebar widget cards */
+    .sidebar-widget {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+    }
+    .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        animation: pulse 1.6s infinite;
+        margin-right: 6px;
+    }
+    @keyframes pulse {
+        0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        }
+        70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+        }
+        100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -196,19 +230,63 @@ with st.spinner("Initializing performance data..."):
 st.sidebar.markdown("<div style='text-align: center; padding: 15px 0;'><h3 style='color:#4f46e5; font-weight:800; margin:0; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3><p style='color:#64748b; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;'>Hierarchical Engine</p></div>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
+# Navigation Workspace
 app_mode = st.sidebar.radio(
     "Navigation Workspace",
     ["Overview Dashboard", "Interactive Drilldown & EDA", "Forecast Simulation", "Pipeline & Code Architecture"]
 )
 
 st.sidebar.markdown("---")
+
+# INTERACTIVE SIDEBAR Presets widget (Only shows relevance or overrides in Forecast Simulation tab)
+st.sidebar.markdown("<p style='color: #475569; font-size: 11px; font-weight:700; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.05em;'>Quick Simulation Presets</p>", unsafe_allow_html=True)
+
+scenario_preset = st.sidebar.selectbox(
+    "Choose Market Scenario",
+    [
+        "Default Reconciled Forecast",
+        "Summer Sales Surge (+15% Growth)",
+        "Economic Contraction (-25% Drop)",
+        "High Volatility Disruption"
+    ]
+)
+
+# Set slider values based on selection
+if scenario_preset == "Default Reconciled Forecast":
+    default_growth = 0
+    default_noise = 0
+elif scenario_preset == "Summer Sales Surge (+15% Growth)":
+    default_growth = 15
+    default_noise = 4
+elif scenario_preset == "Economic Contraction (-25% Drop)":
+    default_growth = -25
+    default_noise = 8
+elif scenario_preset == "High Volatility Disruption":
+    default_growth = 5
+    default_noise = 16
+
+st.sidebar.markdown("---")
+
+# Diagnostics widget with live pulse effect
 st.sidebar.markdown("""
-<div style='background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px;'>
-    <p style='color: #64748b; font-size: 10px; font-weight:600; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;'>Engine Diagnostics</p>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Transactions:</span><span style='color: #0f172a; font-weight: 500;'>69,371</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Unique Series:</span><span style='color: #0f172a; font-weight: 500;'>4,548</span></div>
-    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Base Model:</span><span style='color: #4f46e5; font-weight: 500;'>AutoARIMA</span></div>
-    <div style='color: #64748b; display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span>Reconciliation:</span><span style='color: #10b981; font-weight: 500;'>Bottom-Up</span></div>
+<div class="sidebar-widget">
+    <p style='color: #64748b; font-size: 10px; font-weight:700; text-transform: uppercase; margin-top:0; margin-bottom: 10px; letter-spacing: 0.05em;'>System Diagnostics</p>
+    <div style='display: flex; align-items: center; font-size: 13px; font-weight:600; color: #0f172a; margin-bottom: 8px;'>
+        <span class="pulse-dot"></span> Pipeline Status: Active
+    </div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Database Tier:</span><span style='color: #334155; font-weight: 600;'>Gold Validation</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Dataset Volume:</span><span style='color: #334155; font-weight: 600;'>69.3K rows</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Model Engine:</span><span style='color: #4f46e5; font-weight: 600;'>StatsForecast</span></div>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0;'><span style='color: #64748b;'>Engine Reconciler:</span><span style='color: #10b981; font-weight: 600;'>Bottom-Up</span></div>
+</div>
+""", unsafe_allow_html=True)
+
+# Tech Stack Badges
+st.sidebar.markdown("""
+<div style='text-align: center; margin-top: 15px;'>
+    <span style='background: rgba(99, 102, 241, 0.08); color: #6366f1; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 20px; margin-right: 4px;'>Streamlit v1.58</span>
+    <span style='background: rgba(16, 185, 129, 0.08); color: #10b981; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 20px; margin-right: 4px;'>Nixtla</span>
+    <span style='background: rgba(245, 158, 11, 0.08); color: #f59e0b; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 20px;'>Python 3</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -235,7 +313,7 @@ if app_mode == "Overview Dashboard":
     avg_price = df_raw['price_'].mean()
     top_region = df_raw['dealer_region'].value_counts().index[0]
     
-    # Row of Metrics (Minimalist style)
+    # Row of Metrics
     m1, m2, m3, m4 = st.columns(4)
     
     with m1:
@@ -307,8 +385,8 @@ if app_mode == "Overview Dashboard":
             y=monthly_sales['sales'],
             mode='lines',
             fill='tozeroy',
-            fillcolor='rgba(99, 102, 241, 0.04)', # Soft pastel indigo area
-            line=dict(color='#6366f1', width=3), # Soft indigo line
+            fillcolor='rgba(99, 102, 241, 0.04)',
+            line=dict(color='#6366f1', width=3),
             name="Monthly Sales"
         ))
         fig_trend.update_layout(
@@ -328,12 +406,11 @@ if app_mode == "Overview Dashboard":
         region_sales = df_raw['dealer_region'].value_counts().reset_index()
         region_sales.columns = ['region', 'sales']
         
-        # Pastel layout colors
         fig_pie = go.Figure(data=[go.Pie(
             labels=region_sales['region'],
             values=region_sales['sales'],
             hole=0.6,
-            marker=dict(colors=['#818cf8', '#a78bfa', '#f472b6', '#fb7185', '#38bdf8']), # Pastel palette
+            marker=dict(colors=['#818cf8', '#a78bfa', '#f472b6', '#fb7185', '#38bdf8']),
             textinfo='percent',
             textposition='inside',
             showlegend=True
@@ -348,7 +425,7 @@ if app_mode == "Overview Dashboard":
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    # Anomaly Detection Highlight Section (Subtle slate panels)
+    # Anomaly Section
     st.markdown("##### 🚨 Historical Sales Anomalies")
     sales_series = df_raw.groupby('month_start').size().reset_index(name='sales')
     sales_mean = sales_series['sales'].mean()
@@ -385,13 +462,13 @@ elif app_mode == "Interactive Drilldown & EDA":
     Explore the hierarchical structure of sales. Click on any Region tile to drill down into Brands (Companies) and Body Styles.
     """)
     
-    # Treemap Chart (Using custom pastel color scale)
+    # Treemap Chart
     fig_tree = px.treemap(
         df_raw,
         path=['dealer_region', 'company', 'body_style'],
         values='price_',
         color='price_',
-        color_continuous_scale=[[0, '#f5f3ff'], [0.5, '#c7d2fe'], [1.0, '#818cf8']], # Light pastel purple scale
+        color_continuous_scale=[[0, '#f5f3ff'], [0.5, '#c7d2fe'], [1.0, '#818cf8']],
         labels={'price_': 'Total Revenue ($)', 'dealer_region': 'Region', 'company': 'Brand', 'body_style': 'Body Style'}
     )
     fig_tree.update_layout(
@@ -426,7 +503,7 @@ elif app_mode == "Interactive Drilldown & EDA":
         st.markdown("##### Brand Price Distribution Matrix")
         top_companies_list = top_companies['company'].tolist()
         df_top_c = df_raw[df_raw['company'].isin(top_companies_list)]
-        fig_box = px.box(df_top_c, x='company', y='price_', color_discrete_sequence=['#818cf8']) # Muted pastel blue
+        fig_box = px.box(df_top_c, x='company', y='price_', color_discrete_sequence=['#818cf8'])
         fig_box.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', 
             plot_bgcolor='rgba(0,0,0,0)', 
@@ -552,8 +629,9 @@ elif app_mode == "Forecast Simulation":
                     "Simulated Growth Shift (%)",
                     min_value=-50,
                     max_value=50,
-                    value=0,
+                    value=default_growth, # Linked to Sidebar Preset!
                     step=5,
+                    key="growth_slider",
                     help="Shift the reconciled forecast path."
                 )
             with sim_col_2:
@@ -561,8 +639,9 @@ elif app_mode == "Forecast Simulation":
                     "Add Volatility (%)",
                     min_value=0,
                     max_value=20,
-                    value=0,
+                    value=default_noise, # Linked to Sidebar Preset!
                     step=2,
+                    key="noise_slider",
                     help="Add simulated market noise."
                 )
             
