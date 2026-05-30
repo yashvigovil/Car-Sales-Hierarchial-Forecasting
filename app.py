@@ -36,7 +36,16 @@ st.markdown("""
     
     /* Remove sidebar top padding gap */
     [data-testid="stSidebarUserContent"] {
-        padding-top: 1.5rem !important;
+        padding-top: 0.2rem !important;
+    }
+    
+    [data-testid="stSidebarHeader"] {
+        display: none !important;
+    }
+    
+    /* Pull the logo widget container up */
+    [data-testid="stSidebarUserContent"] > div:first-child {
+        margin-top: -15px !important;
     }
     
     /* Custom tab container styling */
@@ -127,7 +136,7 @@ st.markdown("""
     /* Minimalist Header with a Soft Top Accent Line */
     .app-header {
         background: #ffffff;
-        padding: 26px 30px;
+        padding: 24px 30px;
         border-radius: 14px;
         margin-bottom: 24px;
         border: 1px solid #e2e8f0;
@@ -233,7 +242,15 @@ with st.spinner("Initializing performance data..."):
 # SIDEBAR CONTROLS
 # ----------------------------------------------------
 
-# Navigation Workspace (starts right at the top due to custom padding CSS)
+# Compact Logo branding at the top of the sidebar with clean bottom border
+st.sidebar.markdown("""
+<div style='text-align: center; padding: 2px 0 6px 0; border-bottom: 1px solid #e2e8f0; margin-bottom: 6px;'>
+    <h3 style='color:#4f46e5; font-weight:800; margin:0; font-size: 20px; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3>
+    <p style='color:#64748b; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin:2px 0 0 0;'>Hierarchical Engine</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Navigation Workspace
 app_mode = st.sidebar.radio(
     "Navigation Workspace",
     ["Overview Dashboard", "Interactive Drilldown & EDA", "Forecast Simulation", "Pipeline & Code Architecture"]
@@ -305,12 +322,8 @@ st.sidebar.markdown("""
 # ----------------------------------------------------
 # MAIN HEADER
 # ----------------------------------------------------
-# Placed the "🚗 AUTOFCAST" engine logo badge inside the main header card
 st.markdown("""
 <div class="app-header">
-    <div style="display: flex; align-items: center; margin-bottom: 8px;">
-        <span style="background: rgba(99, 102, 241, 0.08); color: #4f46e5; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em;">🚗 AUTOFCAST ENGINE</span>
-    </div>
     <div class="app-title">Car Sales Hierarchical Forecasting</div>
     <div class="app-subtitle">An interactive visual explorer for time series hierarchical forecasting pipeline</div>
 </div>
@@ -455,7 +468,7 @@ if app_mode == "Overview Dashboard":
             plot_bgcolor='rgba(0,0,0,0)',
             font_color='#475569',
             margin=dict(l=10, r=10, t=10, b=10),
-            height=320,
+            height=360,
             xaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
             yaxis=dict(showgrid=True, gridcolor='rgba(0,0,0,0.03)'),
             hovermode="x unified"
@@ -467,10 +480,11 @@ if app_mode == "Overview Dashboard":
         region_sales = df_raw['dealer_region'].value_counts().reset_index()
         region_sales.columns = ['region', 'sales']
         
+        # Donut chart with legend positioned horizontally below the chart to prevent overlap
         fig_pie = go.Figure(data=[go.Pie(
             labels=region_sales['region'],
             values=region_sales['sales'],
-            hole=0.6,
+            hole=0.5,
             marker=dict(colors=['#818cf8', '#a78bfa', '#f472b6', '#fb7185', '#38bdf8']),
             textinfo='percent',
             textposition='inside',
@@ -480,9 +494,15 @@ if app_mode == "Overview Dashboard":
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
             font_color='#475569',
-            margin=dict(l=10, r=10, t=10, b=10),
-            height=320,
-            legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
+            margin=dict(l=10, r=10, t=10, b=40),
+            height=360,
+            legend=dict(
+                orientation="h",
+                yanchor="top",
+                y=-0.05,
+                xanchor="center",
+                x=0.5
+            )
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
@@ -686,7 +706,6 @@ elif app_mode == "Forecast Simulation":
             
             sim_col_1, sim_col_2 = st.columns(2)
             with sim_col_1:
-                # Key synced with st.session_state
                 growth_slider = st.slider(
                     "Simulated Growth Shift (%)",
                     min_value=-50,
@@ -696,7 +715,6 @@ elif app_mode == "Forecast Simulation":
                     help="Shift the reconciled forecast path."
                 )
             with sim_col_2:
-                # Key synced with st.session_state
                 noise_slider = st.slider(
                     "Add Volatility (%)",
                     min_value=0,
