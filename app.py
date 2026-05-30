@@ -45,7 +45,7 @@ st.markdown("""
     
     /* Pull the logo widget container up */
     [data-testid="stSidebarUserContent"] > div:first-child {
-        margin-top: -15px !important;
+        margin-top: -6px !important;
     }
     
     /* Custom tab container styling */
@@ -244,7 +244,7 @@ with st.spinner("Initializing performance data..."):
 
 # Compact Logo branding at the top of the sidebar with clean bottom border
 st.sidebar.markdown("""
-<div style='text-align: center; padding: 2px 0 6px 0; border-bottom: 1px solid #e2e8f0; margin-bottom: 6px;'>
+<div style='text-align: center; padding: 6px 0 8px 0; border-bottom: 1px solid #e2e8f0; margin-bottom: 10px;'>
     <h3 style='color:#4f46e5; font-weight:800; margin:0; font-size: 20px; letter-spacing:-0.02em;'>🚗 AUTOFCAST</h3>
     <p style='color:#64748b; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin:2px 0 0 0;'>Hierarchical Engine</p>
 </div>
