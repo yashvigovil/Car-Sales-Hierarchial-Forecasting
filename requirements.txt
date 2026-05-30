@@ -1,6 +1,3 @@
 streamlit
 pandas
 plotly
-statsforecast
-hierarchicalforecast
-scikit-learn
